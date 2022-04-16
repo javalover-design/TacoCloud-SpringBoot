@@ -18,5 +18,5 @@ public class Taco {
     @Size(min = 5,message = "名字最少要5个字")
     private String name;
     @Size(min = 1,message = "至少选择一种")
-    private List<String> ingredients;
+    private List<Ingredient> ingredients;
 }
