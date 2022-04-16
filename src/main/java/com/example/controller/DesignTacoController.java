@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.dao.ingredientdao.IngredientRepository;
+import com.example.dao.ingredientdao.JdbcIngredientRepository;
 import com.example.pojo.Ingredient;
 import com.example.pojo.Ingredient.Type;
 import com.example.pojo.Taco;
@@ -28,10 +28,10 @@ import java.util.stream.Collectors;
 @SessionAttributes("order")
 public class DesignTacoController {
     /**将dao层对象注入到controller，以便controller直接调用dao层*/
-    private final IngredientRepository ingredientRepository;
+    private final JdbcIngredientRepository ingredientRepository;
 
     @Autowired
-    public DesignTacoController(IngredientRepository ingredientRepository) {
+    public DesignTacoController(JdbcIngredientRepository ingredientRepository) {
         this.ingredientRepository = ingredientRepository;
     }
 

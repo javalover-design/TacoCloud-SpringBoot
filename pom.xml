@@ -69,7 +69,17 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.16</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/hikari-cp/hikari-cp -->
+        <dependency>
+            <groupId>hikari-cp</groupId>
+            <artifactId>hikari-cp</artifactId>
+            <version>1.8.1</version>
+        </dependency>
+
+
+
     </dependencies>
 
     <build>
