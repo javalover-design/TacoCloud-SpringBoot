@@ -13,5 +13,5 @@ INSERT INTO Ingredient(id, name, type) VALUES ('TMTO','Diced Tomatoes','VEGGIES'
 INSERT INTO Ingredient(id, name, type) VALUES ('LETC','Lettuce','VEGGIES');
 INSERT INTO Ingredient(id, name, type) VALUES ('CHED','Cheddar','CHEESE');
 INSERT INTO Ingredient(id, name, type) VALUES ('JACK','Monterrey Jack','CHEESE');
-INSERT INTO Ingredient(id, name, type) VALUES ('SLSA','Salsa','SAUCE');
-INSERT INTO Ingredient(id, name, type) VALUES ('SRCR','Sour Cream','SAUCE');
+INSERT INTO Ingredient(id, name, type) VALUES ('SLSA','Salsa','SAUCES');
+INSERT INTO Ingredient(id, name, type) VALUES ('SRCR','Sour Cream','SAUCES');

@@ -1,8 +1,10 @@
 package com.example.controller;
 
-import com.example.dao.ingredientdao.JdbcIngredientRepository;
+import com.example.dao.ingredientdao.IngredientRepository;
+import com.example.dao.tacodao.TacoRepository;
 import com.example.pojo.Ingredient;
 import com.example.pojo.Ingredient.Type;
+import com.example.pojo.Order;
 import com.example.pojo.Taco;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,6 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 /**
  * @author lambda
  */
@@ -28,11 +29,13 @@ import java.util.stream.Collectors;
 @SessionAttributes("order")
 public class DesignTacoController {
     /**将dao层对象注入到controller，以便controller直接调用dao层*/
-    private final JdbcIngredientRepository ingredientRepository;
+    private final IngredientRepository ingredientRepository;
+    private final  TacoRepository tacoRepository;
 
     @Autowired
-    public DesignTacoController(JdbcIngredientRepository ingredientRepository) {
+    public DesignTacoController(IngredientRepository ingredientRepository, TacoRepository tacoRepository) {
         this.ingredientRepository = ingredientRepository;
+        this.tacoRepository = tacoRepository;
     }
 
     @RequestMapping
@@ -59,20 +62,54 @@ public class DesignTacoController {
         for (Type type:types){
             model.addAttribute(type.toString().toLowerCase(),filterByType(ingredients,type));
         }
+        Taco design = new Taco();
+        model.addAttribute("design",design);
+
         return "design";
 
     }
 
+    /**
+     * 注解可以确保在模型中创建一个Order对象
+     * @SessionAttributes 中的内容是order，这是因为order在每个订单请求中都能够出现，必须要放在session中才能跨请求
+     * 使用
+     *
+     * @return
+     */
+    @ModelAttribute(name = "order")
+   public Order order(){
+        return new Order();
+    }
+
+    /**
+     * 确保在模型中创建一个taco对象
+     * @return
+     */
+    @ModelAttribute(name = "taco")
+    public Taco taco(){
+        return new Taco();
+    }
+
+
+    /**
+     *
+     * @param design
+     * @param errors
+     * @param order 带有 @ModelAttribute注解，表明其值来自模型中
+     * @return
+     */
     @PostMapping
-    public String processDesign(@Valid @ModelAttribute("design") Taco design, Errors errors){
+    public String processDesign(@Valid  Taco design, Errors errors,@ModelAttribute Order order){
         if (errors.hasErrors()){
             return "design";
         }
+
+        Taco save = tacoRepository.save(design);
         log.info("processing design"+design);
         return "redirect:/orders/current";
     }
 
-    private  List<Ingredient>filterByType(List<Ingredient> ingredients,Type type){
+    private  List<Ingredient> filterByType(List<Ingredient> ingredients,Type type){
         return ingredients.stream().filter(x->x.getType().equals(type)).collect(Collectors.toList());
     }
 }
