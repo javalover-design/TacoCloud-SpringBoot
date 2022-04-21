@@ -5,7 +5,9 @@ import lombok.Data;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author lambda
@@ -29,5 +31,11 @@ public class Order {
     private String ccCVV;
     private Long id;
     private Date placedAt;
+    private List<Taco> tacos=new ArrayList<>();
+    public void addDesign(Taco design){
+        this.tacos.add(design);
+    }
+
+
 
 }

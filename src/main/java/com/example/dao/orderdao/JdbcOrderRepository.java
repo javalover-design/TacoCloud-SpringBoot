@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,7 +36,10 @@ public class JdbcOrderRepository implements  OrderRepository{
         order.setPlacedAt(new Date());
         long orderId=saveOrderDetails(order);
         order.setId(orderId);
-
+        List<Taco> tacos = order.getTacos();
+        for (Taco taco : tacos) {
+            saveTacoToOrder(taco,orderId);
+        }
         return order;
     }
 

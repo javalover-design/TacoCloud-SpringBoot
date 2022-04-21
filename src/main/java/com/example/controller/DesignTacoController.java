@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,6 +104,7 @@ public class DesignTacoController {
         }
 
         Taco save = tacoRepository.save(design);
+        order.addDesign(save);
         log.info("processing design"+design);
         return "redirect:/orders/current";
     }
