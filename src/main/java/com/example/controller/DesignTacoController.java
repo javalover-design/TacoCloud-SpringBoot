@@ -29,7 +29,8 @@ import java.util.stream.Collectors;
 public class DesignTacoController {
     /**将dao层对象注入到controller，以便controller直接调用dao层*/
     private final IngredientRepository ingredientRepository;
-    private final  TacoRepository tacoRepository;
+    private  TacoRepository tacoRepository;
+
 
     @Autowired
     public DesignTacoController(IngredientRepository ingredientRepository, TacoRepository tacoRepository) {
@@ -37,6 +38,11 @@ public class DesignTacoController {
         this.tacoRepository = tacoRepository;
     }
 
+    /**
+     *
+     * @param model
+     * @return design.html
+     */
     @RequestMapping
     public String showDesignForm(Model model){
         //List<Ingredient> ingredients= Arrays.asList(
@@ -73,7 +79,7 @@ public class DesignTacoController {
      * @SessionAttributes 中的内容是order，这是因为order在每个订单请求中都能够出现，必须要放在session中才能跨请求
      * 使用
      *
-     * @return
+     * @return order
      */
     @ModelAttribute(name = "order")
    public Order order(){
@@ -82,7 +88,7 @@ public class DesignTacoController {
 
     /**
      * 确保在模型中创建一个taco对象
-     * @return
+     * @return taco
      */
     @ModelAttribute(name = "taco")
     public Taco taco(){
@@ -92,20 +98,21 @@ public class DesignTacoController {
 
     /**
      *
-     * @param design
-     * @param errors
+     * @param  design
+     * @param  errors
      * @param order 带有 @ModelAttribute注解，表明其值来自模型中
-     * @return
+     * @return order.html
      */
     @PostMapping
-    public String processDesign(@Valid  Taco design, Errors errors,@ModelAttribute Order order){
-        if (errors.hasErrors()){
+    public String processDesign(@Valid Taco design, Errors errors,@ModelAttribute Order order){
+        if (errors.hasErrors()) {
+            System.out.println("erro");
             return "design";
         }
-
         Taco save = tacoRepository.save(design);
         order.addDesign(save);
         log.info("processing design"+design);
+       // model.addAttribute("design",save);
         return "redirect:/orders/current";
     }
 

@@ -27,7 +27,7 @@ public class JdbcTacoRepository implements TacoRepository {
     /**
      * 传入一个产品，获取这个产品的主键
      * @param taco
-     * @return
+     * @return long
      */
     private long saveTacoInfo(Taco taco){
         taco.setCreateAt(new Date());
@@ -60,7 +60,7 @@ public class JdbcTacoRepository implements TacoRepository {
     /**
      * 保存设计好的产品
      * @param design the design
-     * @return
+     * @return taco
      */
     @Override
     public Taco save(Taco design) {
